@@ -35,6 +35,6 @@ PORT: parsed.data.PORT,
 MONGODB_URI: parsed.data.MONGODB_URI,
 CORS_ORIGIN: parsed.data.CORS_ORIGIN,
 LOG_LEVEL: parsed.data.LOG_LEVEL,
-GEMENI_API_KEY: parsed.data.GEMENI_API_KEY,
+GEMINI_API_KEY: parsed.data.GEMENI_API_KEY,
 EBAY_OAUTH_TOKEN: parsed.data.EBAY_OAUTH_TOKEN,
 };
