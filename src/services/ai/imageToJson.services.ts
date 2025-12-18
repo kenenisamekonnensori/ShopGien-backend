@@ -1,9 +1,4 @@
 
-/* --------------------------------------------------------------------------
- * File: src/services/ai/imageToJson.service.ts
- * Description: Converts product image → structured JSON using Gemini Vision
- * --------------------------------------------------------------------------*/
-
 import { geminiGenerateContent } from "../../integration/gemeni..client";
 import { IMAGE_TO_JSON_PROMPT } from "./prompt";
 export interface ImageSearchQuery {
