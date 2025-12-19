@@ -1,4 +1,4 @@
-import { geminiGenerateContent } from "../../integration/gemeni..client";
+import { geminiGenerateContent } from "../../integration/gemeni.client";
 import { TEXT_TO_JSON_PROMPT } from "./prompt";
 export interface TextSearchQuery {
   query: string;

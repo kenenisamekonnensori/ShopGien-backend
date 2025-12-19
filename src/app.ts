@@ -6,6 +6,8 @@ import morgan from 'morgan';
 import createLogger from 'morgan';
 import { env } from './config/env';
 import logger from './config/logger';
+import { rateLimiter } from './middleware/rateLimiter';
+import router from './routes';
 
 export const app = express();
 
@@ -19,6 +21,9 @@ app.use(
 );
 app.use(express.json({ limit: '10mb' }));
 app.use(express.urlencoded({ extended: true }));
+app.use(rateLimiter);
+
+app.use("/api/v1", router);
 
 // HTTP request logging
 if (env.NODE_ENV === 'development') {

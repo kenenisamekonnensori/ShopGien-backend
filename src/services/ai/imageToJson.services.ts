@@ -1,5 +1,5 @@
 
-import { geminiGenerateContent } from "../../integration/gemeni..client";
+import { geminiGenerateContent } from "../../integration/gemeni.client";
 import { IMAGE_TO_JSON_PROMPT } from "./prompt";
 export interface ImageSearchQuery {
   query: string;

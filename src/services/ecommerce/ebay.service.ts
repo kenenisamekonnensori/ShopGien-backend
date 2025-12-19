@@ -1,20 +1,24 @@
 import { query } from "winston";
-import { ebayClient } from "../../integration/ebay.client";
+// import { ebayClient } from "../../integration/ebay.client";
 import { NormalizedProduct, SearchParams } from "./types";
+import { getEbayClient } from "../../integration/ebay.client";
 
 export async function searchEbayProducts(
     params: SearchParams
 ): Promise<NormalizedProduct[]> {
-    const filtes: string[] = [];
 
-    if (params.min_price) filtes.push(`price:[${params.min_price}..]`);
-    if (params.max_price) filtes.push(`price:[..${params.max_price}]`);
+    const ebayClient = getEbayClient();
+
+    const filters: string[] = [];
+
+    if (params.min_price) filters.push(`price:[${params.min_price}..]`);
+    if (params.max_price) filters.push(`price:[..${params.max_price}]`);
 
     const response = await ebayClient.get("/item_summary/search",{
         params: {
             q: params.query,
             limit: params.limit || 20,
-            filter: filtes.join(","),
+            filter: filters.join(","),
         }
     })
 
