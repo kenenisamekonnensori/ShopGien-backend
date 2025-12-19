@@ -3,6 +3,7 @@ import { app } from './app';
 import { conectDatabase, disconnectDatabase } from './config/db';
 import { env } from './config/env';
 import logger from './config/logger';
+import { GoogleGenerativeAI } from "@google/generative-ai";
 
 const PORT = env.PORT;
 
@@ -60,6 +61,19 @@ async function start() {
     process.exit(1);
   }
 }
+
+
+
+// const genAI = new GoogleGenerativeAI(env.GEMINI_API_KEY);
+
+// async function checkModels() {
+//   const response = await fetch(`https://generativelanguage.googleapis.com/v1beta/models?key=${env.GEMINI_API_KEY}`);
+//   const data = await response.json();
+//   console.log("Your authorized model names:");
+//   data.models?.forEach((m: any) => console.log(` - ${m.name.replace('models/', '')}`));
+// }
+
+// checkModels();
 
 start();
 

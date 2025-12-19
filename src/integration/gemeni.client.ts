@@ -1,32 +1,14 @@
 
 import { createHttpClient } from "./httpClient";
 import { env } from "../config/env";
-import { GoogleGenerativeAI, SchemaType, Schema } from "@google/generative-ai";
-
+import { GoogleGenerativeAI } from "@google/generative-ai";
+import { imageResponseSchema, responseSchema } from "./responseSchema";
 
 const genAI = new GoogleGenerativeAI(env.GEMINI_API_KEY);
 
-const responseSchema: Schema = {
-  type: SchemaType.OBJECT,
-  properties: {
-    query: { type: SchemaType.STRING, description: "The core search query" },
-    category: { type: SchemaType.STRING, nullable: true },
-    filters: {
-      type: SchemaType.OBJECT,
-      properties: {
-        min_price: { type: SchemaType.NUMBER, nullable: true },
-        max_price: { type: SchemaType.NUMBER, nullable: true },
-        brand: { type: SchemaType.STRING, nullable: true },
-        color: { type: SchemaType.STRING, nullable: true },
-      },
-      required: ["min_price", "max_price", "brand", "color"],
-    },
-  },
-  required: ["query", "category", "filters"],
-};
 
 export const gemeniModel = genAI.getGenerativeModel({
-  model: "gemini-1.5-flash",
+  model: "gemini-3-flash-preview",
   systemInstruction: "You are a shopping assistant. Extract search parameters from user messages.",
 
   generationConfig: {
@@ -34,6 +16,19 @@ export const gemeniModel = genAI.getGenerativeModel({
     responseSchema: responseSchema,
   }
 })
+
+export const gemeniModelImage = genAI.getGenerativeModel(
+  {
+    model: "gemini-2.5-flash-image",
+    systemInstruction: "You are an expert shopping assistant. Analyze the provided image and extract product details into structured JSON.",
+
+    generationConfig: {
+      responseMimeType: "application/json",
+      responseSchema: imageResponseSchema,
+    },
+  },
+  {apiVersion: "v1beta"}
+);
 
 
 

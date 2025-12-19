@@ -7,7 +7,7 @@ export async function searchEbayProducts(
     params: SearchParams
 ): Promise<NormalizedProduct[]> {
 
-    const ebayClient = getEbayClient();
+    const ebayClient = await getEbayClient();
 
     const filters: string[] = [];
 

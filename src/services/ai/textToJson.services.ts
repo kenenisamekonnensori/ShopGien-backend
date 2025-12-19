@@ -1,4 +1,4 @@
-import { geminiGenerateContent } from "../../integration/gemeni.client";
+import { gemeniModel } from "../../integration/gemeni.client";
 import { TEXT_TO_JSON_PROMPT } from "./prompt";
 export interface TextSearchQuery {
   query: string;
@@ -12,18 +12,14 @@ export interface TextSearchQuery {
 }
 
 export async function textToJson(userMessage: string): Promise<TextSearchQuery> {
-  const response = await geminiGenerateContent(
-    TEXT_TO_JSON_PROMPT(userMessage)
-  );
 
-  const rawText = response.candidates?.[0]?.content?.parts?.[0]?.text;
 
-  if (!rawText) {
-    throw new Error("Gemini returned empty response");
-  }
+  const result = await gemeniModel.generateContent(userMessage);
+  const response = result.response;
+  const text = response.text();
 
   try {
-    return JSON.parse(rawText) as TextSearchQuery;
+    return JSON.parse(text) as TextSearchQuery;
   } catch (error) {
     throw new Error("Failed to parse Gemini JSON response");
   }
