@@ -26,3 +26,25 @@ export async function register(req: Request, res: Response, next: NextFunction){
         next(error);
     }
 }
+
+export async function login(req: Request, res: Response, next: NextFunction){
+    try {
+        const { email, password } = req.body;
+
+        if (!email || !password) {
+            return res.status(400).json({ message: 'Email and password are required' });
+        }
+
+        const result = await AuthUseCase.login(email, password);
+
+        return  res.status(200).json({
+            user: {
+                id: result.existingUser.id,
+                email: result.existingUser.email,
+            },
+            accessToken: result.accessToken,
+        });
+    } catch (error) {
+        next(error);
+    }
+}
