@@ -9,4 +9,8 @@ export function signAccessToken(payLoad: jwtPayload): string {
     return jwt.sign(payLoad, process.env.JWT_SECRET as jwt.Secret, {
         expiresIn: process.env.JWT_EXPIRES_IN || '15m',
     } as jwt.SignOptions);
-}
+};
+
+export function verifyAccessToken(token: string): jwtPayload {
+    return jwt.verify(token, process.env.JWT_SECRET as jwt.Secret) as jwtPayload;
+};
